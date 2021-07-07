@@ -87,6 +87,7 @@ The paper link: [Multi-term \& Multi-task Affect Analysis in the Wild](https://a
      <img src="overview.png" width=50%>
   - Preprocessing: <br>
      <img src="pre_processing.png" width=50%>
+     
      (a) original video frame, (b) cropped face image using MTCNN, (c) corrected face image by i) fixed hue ii) offset saturation, iii)offset value and applied limited adaptive histogram equalization
 
   - Single-frame model: <br>
