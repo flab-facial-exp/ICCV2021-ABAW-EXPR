@@ -96,6 +96,9 @@ The paper link: [Multi-term \& Multi-task Affect Analysis in the Wild](https://a
   - Multi-frame model: <br>
      <img src="multi_frame.png" width=50%>
 
+## Copyright
+Copyright 2021 FUJITSU LIMITED.
+
 ## Citation
 
 ```
