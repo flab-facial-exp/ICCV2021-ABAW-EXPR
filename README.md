@@ -104,7 +104,3 @@ The paper link: [Multi-term \& Multi-task Affect Analysis in the Wild](https://a
     primaryClass={cs.CV}
 }
 ```
-
-
-- 
-- 
