@@ -20,7 +20,7 @@ The paper link: [Multi-term \& Multi-task Affect Analysis in the Wild](https://a
 
 ## How to run
 
- We use opensource library [*Openface 2.2.0*](https://github.com/TadasBaltrusaitis/OpenFace), [*keras-vggface*](https://github.com/rcmalli/keras-vggface) for generating features, and [*Expression in-the-Wild (ExpW) Dataset*](http://mmlab.ie.cuhk.edu.hk/projects/socialrelation/index.html) for data augmentation. And we use keras 2.3.1, tensorflow 2.2.1.
+ We use opensource library [*Openface 2.2.0*](https://github.com/TadasBaltrusaitis/OpenFace), [*keras-vggface*](https://github.com/rcmalli/keras-vggface), [*mtcnn-opencv 1.0.2*](https://pypi.org/project/mtcnn-opencv/) for generating features, and [*Expression in-the-Wild (ExpW) Dataset*](http://mmlab.ie.cuhk.edu.hk/projects/socialrelation/index.html) for data augmentation. And we use keras 2.3.1, tensorflow 2.2.1.
 
 1. Download and setup Anaconda3
 
@@ -29,6 +29,7 @@ The paper link: [Multi-term \& Multi-task Affect Analysis in the Wild](https://a
    ```
    pip install git+https://github.com/rcmalli/keras-vggface.git
    pip install opencv-python
+   pip install mtcnn-opencv
    ```
 
 3. Download Dataset
