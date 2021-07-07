@@ -1,51 +1,51 @@
-# Multi-term and Multi-task Affect Analysis in the Wild 
+# Multi-modal Affect Analysis using standardized data within subjects in the Wild 
 
-Challenges: **FG-2020 Competition: Affective Behavior Analysis in-the-wild (ABAW)**
+Challenges: **ICCV 2021: 2nd Workshop and Competition on Affective Behavior Analysis in-the-wild (ABAW)**
 
-URL: https://ibug.doc.ic.ac.uk/resources/fg-2020-competition-affective-behavior-analysis/
+URL: https://ibug.doc.ic.ac.uk/resources/iccv-2021-2nd-abaw/
 
-Team Name: **FLAB2020**
+Team Name: **FLAB2021**
 
-Team Members: Sachihiro Youoku,  Junya Saito, Yuushi Toyoda, Ryosuke Kawamura, Takahisa Yamamoto, Xiaoyu Mi, Kentaro Murase
+Team Members: Sachihiro Youoku, Junya Saito, Takahisa Yamamoto, Akiyoshi Uchida, Xiaoyu Mi (1), Ziqiang Shi, Liu Liu, Zhongling Liu (2)
 
-Affiliation: Trusted AI Project, Artificial Intelligence Laboratory, Fujitsu Laboratories Ltd., Japan
+Affiliation (1): Advanced Converging Technologies Laboratories, Fujitsu Ltd., Japan
+
+Affiliation (2): Fujitsu R&D Center Co. Ltd., China
 
 The paper link: [Multi-term \& Multi-task Affect Analysis in the Wild](https://arxiv.org/pdf/2009.13885.pdf)
 
 ## Update:
 
-- 2020.10.04: release
+- 2021.07.08: release
 
 ## How to run
 
- We use opensource library [*Openface*](https://github.com/TadasBaltrusaitis/OpenFace), [*Openpose*](https://github.com/CMU-Perceptual-Computing-Lab/openpose) for generating features
+ We use opensource library [*Openface 2.2.0*](https://github.com/TadasBaltrusaitis/OpenFace), [*keras-vggface*](https://github.com/rcmalli/keras-vggface) for generating features, and [*Expression in-the-Wild (ExpW) Dataset*](http://mmlab.ie.cuhk.edu.hk/projects/socialrelation/index.html) for data augmentation. And we use keras 2.3.1, tensorflow 2.2.1.
 
 1. Download and setup Anaconda3
 
 2. Install dependencies
 
    ```
-   pip install lightgbm
+   pip install git+https://github.com/rcmalli/keras-vggface.git
    pip install opencv-python
    ```
 
 3. Download Dataset
 
-   - We use [Aff-Wild2 database](https://ibug.doc.ic.ac.uk/resources/aff-wild2/)
+   - We use [Aff-Wild2 database](https://ibug.doc.ic.ac.uk/resources/aff-wild2/), [*Expression in-the-Wild (ExpW) Dataset*](http://mmlab.ie.cuhk.edu.hk/projects/socialrelation/index.html)
+   - copy data to:
+     - Aff-Wild2 videos: "src/videos" folder
+     - Aff-Wild2 annotations: "src/annotations" folder
+     - Aff-Wild2 test set: "src/test_set" folder
+     - ExpW imags: "src/expr_image" folder
 
 4. Download & setup Openface
-   - Download [Openface](https://github.com/TadasBaltrusaitis/OpenFace)
-   - Generate Openface features (AU, pose, gaze) from videos in Aff-Wild2 database
-   - Copy generated csv files to the directory 'base_data/OpenFace'
-
-5. Download & setup Openpose
-   - Dowload [Opnpose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)
-   - Generate Openpose features from videos in Aff-Wild2 database
-   - Convert generated json files to '(video name)_openpose.csv' files
-   - Copy csv files to  the directory 'base_data/OpenPose'
-
-6. setup ResNet50
-   - Generate ResNet50 features using ['*TORCHVISION.MODELS*'](https://pytorch.org/docs/stable/torchvision/models.html) from cropped image in Aff-Wild2 database.
+   - Download [Openface 2.2.0](https://github.com/TadasBaltrusaitis/OpenFace)
+   - copy openface 2.2.0 into "ofe220" folder
+   
+6. Generate Audio data
+   - Generate Audio features using *** from Aff-Wild2 database.
 
    - using pre-trained model, below:
 
@@ -54,56 +54,57 @@ The paper link: [Multi-term \& Multi-task Affect Analysis in the Wild](https://a
      resnet50 = models.resnet50(pretrained=True)
      ```
 
-   - Convert ResNet50 features to '(video name)_resnet50.h5' files
      
-     - note: Dimensional reduction to 200 dimensions using PCA
-     
-   - Copy csv files to  the directory 'base_data/Resnet'
-
-7. setup EfficientNet
-
-   - Generate EfficientNet features using [GitHub Model](https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet)
-   - Convert EfficientNet features to '(video name)_enet.h5' files
-     - note: Dimensional reduction to 300 dimensions using PCA
-   - Copy csv files to  the directory 'base_data/Enet'
-
+   
 8. Run terminal
    ```
    cd ~(this directory)
    jupyter lab
    ```
 
-9. Run Submit X 
-   - Execute 00~ to 10~ ipynb files in order
-   - 00: calculate frame count, and save per videos
-   - 01: merge features (openface, openpose, ...) and label data
-   - 02: create multi-term features data from merged data
-   - 03: generate single-term models
-   - 04: generate single-task models using single-term models
-   - 05: generate multi-task models using single-task models and single-term models
-   - 06: create multi-term features data for validation per frame
-   - 07: predict and evaluate validation dataset per frame
-   - 08: merge features (openface, openpose, ...) for test dataset
-   - 09: create multi-term features data for  test dataset per frame
-   - 10: predict test dataset
+9. Run Codes
+   - Audio_Aff2_001~: generating audio datasets from audio features in *"dataset/aff2_audio/pca_dl_audio_feature_of_abaw"* folder
+   - Image_Aff2_001~: generating cropped image from videos in *"src/videos"* folder, and save image to *"dataset/aff2_images/cropped"* folder
+   - Image_Aff2_002~: generating corrected image from images in *"dataset/aff2_images/cropped"* folder, and save image to *"dataset/aff2_images/corrected"* folder
+   - Image_Aff2_003~: generating openface features from images in *"dataset/aff2_images/corrected"* folder, and save features to *"dataset/aff2_images/au"* folder
+   - Image_Aff2_004~: generating vggface features from images in *"dataset/aff2_images/corrected"* folder, and save image to *"dataset/aff2_images/vggface"* folder
+   - Image_Aff2_005~: merge features openface and vggface, and save dataset to *"dataset/aff2_images/dataset"* folder
+   - Image_expw_001~: generating cropped image from image in *"src/expr_image"* folder, and save image to *"dataset/expw_images/cropped"* folder
+   - Image_expw_002~: generating corrected image from images in *"dataset/expw_images/cropped"* folder, and save image to *"dataset/expw_images/corrected"* folder
+   - Image_expw_003~: generating openface features from images in *"dataset/expw_images/corrected"* folder, and save features to *"dataset/expw_images/au"* folder
+   - Image_expw_004~: generating vggface features from images in *"dataset/expw_images/corrected"* folder, and save image to *"dataset/expw_images/vggface"* folder
+   - Image_expw_005~: merge features openface and vggface, and save dataset to *"dataset/expw_images/dataset"* folder
+   - Image_mix_006~: generate and validate single-frame model using Aff-Wild2 & ExpW image dataset in  *"dataset/aff2_images/dataset"*  & *"dataset/expw_images/dataset"* folder, and save models to *"model_expr/model_image"* folder
+   - Image_mix_007~: generate and validate single-frame model using Aff-Wild2 & ExpW image dataset in  *"dataset/aff2_images/dataset"*  & *"dataset/expw_images/dataset"* folder (with pseudo-label data that is predicted from non-labelled data in Aff-Wild2 dataset), and save models to *"model_expr/model_image"* folder
+   - Image_mix_008~: generate and validate multi-frame model using Aff-Wild2 image dataset in  *"dataset/aff2_images/dataset"*   folder, and save models to *"model_expr/model_image"* folder
+   - Image_mix_009~: generate and validate multi-frame model using Aff-Wild2 image dataset in  *"dataset/aff2_images/dataset"*   folder (using standardized data within subjects),  and save models to *"model_expr/model_image"* folder
+   - multi_001~: generate and validate multi-frame model using Aff-Wild2 image and audio dataset in  *"dataset/aff2_images/dataset"*  & *"dataset/aff2_audio/dataset"* folder, and save models to *"model_expr/model_mix"* folder
+   - multi_002~: generate and validate multi-frame model using Aff-Wild2 image and audio dataset in  *"dataset/aff2_images/dataset"*  & *"dataset/aff2_audio/dataset"* folder (using standardized data within subjects), and save models to *"model_expr/model_mix"* folder
+   - Test: generate submission data using Aff-Wild2 image and audio dataset in  *"dataset/aff2_images/dataset"*  & *"dataset/aff2_audio/dataset"* folder and models in *"model_expr/model_mix"* folder
 
 ## Framework
   - Overview: <br>
-     <img src="over_view.png" width=50%>
+     <img src="overview.png" width=50%>
   - Preprocessing: <br>
      <img src="pre_processing.png" width=50%>
-  - Multi-term \& Multi-task Model: <br>
-     <img src="multi_task_model.png" width=50%>
+  - Single-frame model: <br>
+     <img src="single_frame.png" width=50%>
+  - Multi-frame model: <br>
+     <img src="multi_frame.png" width=50%>
 
 ## Citation
 
 ```
-@misc{flab2020affect,
-    title={Multi-term and Multi-task Affect Analysis in the Wild },
-    author={Sachihiro Youoku and Yuushi Toyoda and Ryosuke Kawamura and Junya Saito and Takahisa Yamamoto and Xiaoyu Mi and Kentaro Murase},
-    year={2020},
+@misc{flab2021affect,
+    title={Multi-modal Affect Analysis using standardized data within subjects in the Wild},
+    author={Sachihiro Youoku and Junya Saito and Takahisa Yamamoto and Akiyoshi Uchida and Xiaoyu Mi and Ziqiang Shi and Liu Liu and Zhongling Liu},
+    year={2021},
     eprint={2009.13885},
     archivePrefix={arXiv},
     primaryClass={cs.CV}
 }
 ```
+
+
+- 
+- 
