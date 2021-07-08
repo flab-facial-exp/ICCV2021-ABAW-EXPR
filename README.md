@@ -12,7 +12,7 @@ Affiliation (1): Advanced Converging Technologies Laboratories, Fujitsu Ltd., Ja
 
 Affiliation (2): Fujitsu R&D Center Co. Ltd., China
 
-The paper link: [Multi-term \& Multi-task Affect Analysis in the Wild](https://arxiv.org/pdf/2009.13885.pdf)
+The paper link: [Multi-modal Affect Analysis using standardized data within subjects in the Wild](https://arxiv.org/pdf/2107.03009.pdf)
 
 ## Update:
 
@@ -46,16 +46,9 @@ The paper link: [Multi-term \& Multi-task Affect Analysis in the Wild](https://a
    - copy openface 2.2.0 into "ofe220" folder
    
 6. Generate Audio data
-   - Generate Audio features using *** from Aff-Wild2 database.
-
-   - using pre-trained model, below:
-
-     ```
-     import torchvision.models as models
-     resnet50 = models.resnet50(pretrained=True)
-     ```
-
-     
+   - Generate Audio features from Aff-Wild2 database using [PANNs](https://arxiv.org/abs/1912.10211).
+     - output: 2048 dimension
+     - dimension reduction with PCA to 300 dimension     
    
 8. Run terminal
    ```
