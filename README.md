@@ -78,7 +78,7 @@ The paper link: [Multi-modal Affect Analysis using standardized data within subj
 
 ## Framework
   - Overview: <br>
-     <img src="overview.png" width=50%>
+     <img src="overview.png" width=75%>
   - Preprocessing: <br>
      <img src="pre_processing.png" width=50%>
      
